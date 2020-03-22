@@ -1,12 +1,13 @@
 const movies = require('./routes/movies');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
 mongoose
-  .connect('mongodb://localhost/playground', { useNewUrlParser: true })
+  .connect('mongodb://localhost/playground', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(res => {
     console.log('Connected to Vidly DB...');
   })
