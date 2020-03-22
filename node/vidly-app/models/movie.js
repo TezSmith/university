@@ -13,12 +13,15 @@ const validate = (body) => {
   return Joi.validate(body,schema)
 }
 
-const Movie = mongoose.model('Movie', new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
   title: String,
   numberInStock: Number,
   genre: { type: genreSchema, required: true },
   dailyRentalRate: Number,
-}))
+})
+
+const Movie = mongoose.model('Movie', movieSchema)
 
 exports.Movie = Movie
 exports.validate = validate
+exports.movieSchema = movieSchema

@@ -1,6 +1,7 @@
 const movies = require('./routes/movies');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
+const rentals = require('./routes/rentals')
 
 const express = require('express');
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/vidly/api/genres', genres);
 app.use('/vidly/api/customers', customers);
 app.use('/vidly/api/movies', movies);
+app.use('/vidly/api/rentals', rentals)
 
 const port = process.env.PORT || 3000;
 
