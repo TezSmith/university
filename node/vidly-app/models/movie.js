@@ -1,12 +1,12 @@
-const Joi = require('joi')
+// const Joi = require('joi')
 const mongoose = require('mongoose')
 const { genreSchema } = require('./genre')
 
-//Hybrid Method 
+// Hybrid Method 
 const validate = (body) => {
   const schema = {
     title: Joi.string().min(3),
-    genreId: Joi.string().required(),
+    genreId: Joi.objectId().required(),
     numberInStock: Joi.number(),
     dailyRentalRate: Joi.number()
   }

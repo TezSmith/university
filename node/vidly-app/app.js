@@ -1,3 +1,6 @@
+const Joi = require('Joi');
+Joi.objectId = require('joi-objectid')(Joi);
+
 const movies = require('./routes/movies');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');

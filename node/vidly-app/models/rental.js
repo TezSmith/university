@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Joi = require('Joi')
 
 // The customer and rental schema are not supplied in the event these objects have dozens of unneeded properties
 const Rental = mongoose.model('Rental', new mongoose.Schema({
@@ -58,8 +57,8 @@ const Rental = mongoose.model('Rental', new mongoose.Schema({
 
 const validate = (body) => {
   const schema = {
-    customerId: Joi.string().required(),
-    movieId: Joi.string().required()
+    customerId: Joi.objectId().required(),
+    movieId: Joi.objectId().required()
   };
 
   return Joi.validate(body, schema);
