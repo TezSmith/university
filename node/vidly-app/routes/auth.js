@@ -1,4 +1,3 @@
-
 const Joi = require('Joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
