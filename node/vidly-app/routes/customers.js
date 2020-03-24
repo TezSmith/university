@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
     phone: req.body.phone,
     isGold: req.body.isGold
   });
+
   await customer.save();
   res.send(customer);
 });
@@ -29,8 +30,6 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(404).send(error.details[0].message);
-
-  console.log('what');
 
   const customer = await Customer.findByIdAndUpdate(
     req.params.id,

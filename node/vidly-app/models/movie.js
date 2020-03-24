@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 const { genreSchema } = require('./genre')
 
-// Hybrid Method 
+// Embedded Method 
 const validate = (body) => {
   const schema = {
     title: Joi.string().min(3),
