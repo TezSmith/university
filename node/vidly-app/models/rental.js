@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Hybrid Approach Example
-// The customer and rental schema are not supplied in the event these objects have dozens of unneeded properties
+// The customer and movie schema are not supplied in the event these objects have dozens of unneeded properties
 const Rental = mongoose.model('Rental', new mongoose.Schema({
   customer: {
     type: new mongoose.Schema({

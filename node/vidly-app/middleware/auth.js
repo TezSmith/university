@@ -15,4 +15,5 @@ const auth = (req, res, next) => {
   }
 }
 
+// This method won't be added to app.js because we want to use this method selectively
 module.exports = auth;

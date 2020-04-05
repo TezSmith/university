@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth');
 const { Movie, validate } = require('../models/movie');
 const { Genre } = require('../models/genre');
 const express = require('express');
@@ -8,7 +9,7 @@ router.get('/', async (req, res) => {
   res.send(movies);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(404).send('Could not add movie');
 
