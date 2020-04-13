@@ -9,6 +9,7 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: 'logfile.log', level: 'info' }),
     new winston.transports.MongoDB({ db: 'mongodb://localhost/playground', options: { useUnifiedTopology: true}, level: 'error' }),
   ],
+  // exitOnError: true,
 });
 
 module.exports = function() {
