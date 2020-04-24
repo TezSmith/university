@@ -2,7 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const genreSchema = mongoose.Schema({
-  name: { type: String, required: true, min: 5, max: 25 }
+  name: { type: String, required: true, min: 5, max: 50 }
 });
 
 const Genre = mongoose.model('Genre', genreSchema);
@@ -10,7 +10,8 @@ const Genre = mongoose.model('Genre', genreSchema);
 const validate = body => {
   const schema = {
     name: Joi.string()
-      .min(3)
+      .min(5)
+      .max(50)
       .required()
   };
 
