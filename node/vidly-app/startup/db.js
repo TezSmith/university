@@ -6,17 +6,19 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: 'logfile.log', level: 'info' }),
   ],
 });
+const config = require('config')
 
 
 module.exports = function (){
+  const db = config.get('db');
   mongoose
-   .connect('mongodb://localhost/playground', {
+   .connect(db, {
      useNewUrlParser: true,
      useUnifiedTopology: true,
      useCreateIndex: true,
      useFindAndModify: false,
    })
    .then((res) => {
-     logger.info('Connected to MongoDB...');
+     logger.info(`Connected to ${db}...`);
    })
 }

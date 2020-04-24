@@ -1,19 +1,21 @@
 const winston = require('winston');
-require('winston-mongodb');
+require('winston-mongodb'); // May have to comment this out for integration tests
 require('express-async-errors');
 
 const logger = winston.createLogger({
   format: winston.format.simple(),
   transports: [
-    new winston.transports.Console({ colorize: true, prettyPrint: true }),
+    new winston.transports.Console({ colorize: true, prettyPrint: true, handleExceptions: true, level: 'info' }),
     new winston.transports.File({ filename: 'logfile.log', level: 'info' }),
-    new winston.transports.MongoDB({ db: 'mongodb://localhost/playground', options: { useUnifiedTopology: true}, level: 'error' }),
+    new winston.transports.MongoDB({ db: 'mongodb://localhost/playground', options: { useUnifiedTopology: true}, level: 'error' }), // May have to comment this out
   ],
   // exitOnError: true,
 });
 
 module.exports = function() {
-  logger.exceptions.handle();
+  logger.exceptions.handle(
+    new winston.transports.File({ filename: 'uncaughtExceptions.log' })
+  );
 
   process.on('unhandledRejection', (ex) => {
     throw ex; // This will work with Winston

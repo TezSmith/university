@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll --verbose"
   },
   "jest": {
     "testEnvironment": "node",
-    "testMatch": ["<rootDir>/tests/**/*.js"]
+    "testMatch": [
+      "<rootDir>/tests/**/*.js"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,7 @@
     "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
-    "jest": "^25.3.0"
+    "jest": "^25.3.0",
+    "supertest": "^4.0.2"
   }
 }

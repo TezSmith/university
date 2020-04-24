@@ -2,7 +2,7 @@ const winston = require('winston');
 const logger = winston.createLogger({
   format: winston.format.simple(),
   transports: [
-    new winston.transports.Console(),
+    new winston.transports.Console({ colorize: true, prettyPrint: true, handleExceptions: true, level: 'info' }),
     new winston.transports.File({ filename: 'logfile.log', level: 'info' }),
   ],
 });
@@ -19,6 +19,8 @@ require('./startup/validation')();
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   logger.info(`Listening on port ${port}...`);
 });
+
+module.exports = server;

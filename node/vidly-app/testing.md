@@ -13,3 +13,5 @@ Mocha (most popular but needs plugins like Chai & Sinon
 Jest (a wrapper for Jasmine)
 
 The number of unit tests that a function has should be measured by the amount of execution paths that there are.
+
+Creating Test DB
