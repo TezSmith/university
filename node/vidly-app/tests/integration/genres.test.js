@@ -21,6 +21,7 @@ describe('/api/genres', () => {
       ])
 
       const res = await request(server).get('/vidly/api/genres');
+
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
       expect(res.body.some(g => g.name === 'genre1')).toBeTruthy()
@@ -42,6 +43,12 @@ describe('/api/genres', () => {
       const res = await request(server).get('/vidly/api/genres/1');
       expect(res.status).toBe(404)
     })
+
+    it('should return 404 if no genre with given id exists', async () => {
+      const id = mongoose.Types.ObjectId; 
+      const res = await request(server).get(`/vidly/api/genres/${id}`);
+      expect(res.status).toBe(404)
+  })
   })
 
   describe('POST /', () => {
