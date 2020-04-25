@@ -4,7 +4,9 @@ const { Genre } = require('../../models/genre');
 
 
 describe('auth middleware', () => {
+
   beforeEach(() => { server = require('../../app'); });
+  
   afterEach(async () => { 
     await Genre.deleteMany({}); // We're testing auth using the genres route
     server.close(); 

@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 describe('/api/genres', () => {
   
   describe('GET /', () => {
+    
     beforeEach(() => {
       server = require('../../app');
     })
@@ -107,6 +108,77 @@ describe('/api/genres', () => {
       expect(res.body).toHaveProperty('_id');
       expect(res.body).toHaveProperty('name', 'genre1');
     });
+  })
+
+  describe('PUT /:id', () => {
+    // Make a request to the server
+    // Make a valid genre
+    // Make an authorized token
+    // Clean up database 
+    // Make a test for a valid object, but it doesn't exist in database
+    let token
+    let newName 
+    let genre
+    let id 
+
+    const exec = async () => {
+      return await request(server)
+        .put(`/vidly/api/genres/${id}`)
+        .set('x-auth-token', token)
+        .send({ name: newName })
+    }
+    
+    beforeEach( async() => {
+      genre = new Genre({ name: 'genre1' })
+      await genre.save();
+
+      token = new User().generateAuthToken();
+      id = genre._id;
+      newName = 'UpdatedName'
+    });
+
+    it('should return 404 if genre name is less than 5 characters', async () => {
+      newName = '1234'
+      const res = await exec();
+
+      expect(res.status).toBe(400)
+    })
+
+    it('should return 404 if genre name is more than 50 characters', async () => {
+      newName = new Array(52).join('a')
+      const res = await exec();
+
+      expect(res.status).toBe(400)
+    })
+
+    it('should return 404 if genre id is invalid', async () => {
+      id = '1'
+      const res = await exec();
+
+      expect(res.status).toBe(404)
+    })
+
+    it('should return 404 if genre with the given id was not found', async () => {
+      id = mongoose.Types.ObjectId();
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should update the genre if input is valid', async () => {
+      await exec();
+      const updatedGenre = await Genre.findById(genre._id);
+
+      expect(updatedGenre.name).toBe(newName);
+    });
+    
+    it('should return the updated genre if valid', async () => {
+      const res = await exec();  
+        
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('name', 'UpdatedName')
+    })
+
   })
 
 })
