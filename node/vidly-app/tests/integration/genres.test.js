@@ -174,9 +174,77 @@ describe('/api/genres', () => {
     
     it('should return the updated genre if valid', async () => {
       const res = await exec();  
-        
+
       expect(res.body).toHaveProperty('_id');
       expect(res.body).toHaveProperty('name', 'UpdatedName')
+    })
+
+  })
+
+  describe('DELETE /:id', () => {
+    let id
+    let token 
+    let admin
+    let genre
+    
+    const exec = async () => {
+      return await request(server)
+      .delete(`/vidly/api/genres/${id}`)
+      .set('x-auth-token', token)
+      .send();
+    }
+
+    beforeEach( async() => {
+      token = new User({ isAdmin: true }).generateAuthToken();
+      genre = new Genre({ name: 'genre1' })
+      await genre.save();
+
+      id = genre._id;
+    })
+
+
+
+    it('should return 401 if user is not logged in', async () => {
+      token = ''
+      const res = await exec()
+      
+      expect(res.status).toBe(401)
+    })
+
+    it('should return 403 if user is not an admin', async () => {
+      token = new User({ isAdmin: false }).generateAuthToken();
+      const res = await exec()
+      
+      expect(res.status).toBe(403)
+    })
+
+    it('should return 404 if genre id is invalid', async () => {
+      id = 1
+      const res = await exec()
+      
+      expect(res.status).toBe(404)
+    })
+
+    it('should return 404 if no genre with the given id was found', async () => {
+      id = mongoose.Types.ObjectId();
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should delete the genre if input is valid', async () => {
+      await exec();
+      const genreInDb = await Genre.findById(id);
+
+      expect(genreInDb).toBeNull();
+    });
+
+    it('should return the removed genre', async () => {
+      const res = await exec();
+      // console.log(res)
+
+      expect(res.body).toHaveProperty('_id', genre._id.toHexString());
+      expect(res.body).toHaveProperty('name', genre.name);
     })
 
   })
