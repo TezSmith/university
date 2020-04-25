@@ -2,18 +2,19 @@ const request = require('supertest');
 let server;
 const { Genre } = require('../../models/genre');
 const { User } = require('../../models/user');
+const mongoose = require('mongoose');
 
 describe('/api/genres', () => {
-
-  beforeEach(() => {
-    server = require('../../app');
-  })
-  afterEach(async () => {
-    server.close();
-    await Genre.deleteMany({})
-  })
-
+  
   describe('GET /', () => {
+    beforeEach(() => {
+      server = require('../../app');
+    })
+    afterEach(async () => {
+      await Genre.deleteMany({})
+      server.close();
+    })
+    
     it('should return all genres', async () => {
       await Genre.collection.insertMany([
         { name: 'genre1' },
