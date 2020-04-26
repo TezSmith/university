@@ -1,5 +1,5 @@
 const auth = require('../middleware/auth');
-const { Rental, validate } = require('../models/rental')
+const { Rental, validateRental } = require('../models/rental')
 const { Movie } = require('../models/movie')
 const { Customer } = require('../models/customer')
 const mongoose = require('mongoose')
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', auth, async (req, res) => {
-  const { error } = validate(req.body);
+  const { error } = validateRental(req.body);
   if (error) return res.status(404).send(error.details[0].message)
 
   const movie = await Movie.findById(req.body.movieId)

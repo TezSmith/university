@@ -1,5 +1,5 @@
 const auth = require('../middleware/auth');
-const { Movie, validate } = require('../models/movie');
+const { Movie, validateMovie } = require('../models/movie');
 const { Genre } = require('../models/genre');
 const express = require('express');
 const router = express.Router();
@@ -10,12 +10,11 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', auth, async (req, res) => {
-  const { error } = validate(req.body);
+  const { error } = validateMovie(req.body);
   if (error) return res.status(404).send('Could not add movie');
 
   const genre = await Genre.findById(req.body.genreId)
   if (!genre) return res.status(404).send('Invalid genre');
-
 
   const movie = new Movie({
     title: req.body.title,

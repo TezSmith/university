@@ -8,8 +8,8 @@ describe('auth middleware', () => {
   beforeEach(() => { server = require('../../app'); });
   
   afterEach(async () => { 
+    await server.close();
     await Genre.deleteMany({}); // We're testing auth using the genres route
-    server.close(); 
   });
 
   let token;

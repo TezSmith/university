@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const { genreSchema } = require('./genre')
 
 // Embedded Method 
-const validate = (body) => {
+const validateMovie = (body) => {
   const schema = {
     title: Joi.string().min(3),
     genreId: Joi.objectId().required(),
@@ -24,5 +24,5 @@ const movieSchema = new mongoose.Schema({
 const Movie = mongoose.model('Movie', movieSchema)
 
 exports.Movie = Movie
-exports.validate = validate
+exports.validateMovie = validateMovie
 exports.movieSchema = movieSchema

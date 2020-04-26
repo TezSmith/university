@@ -7,7 +7,7 @@ const customerSchema = mongoose.Schema({
   isGold: { type: Boolean, default: false }
 });
 
-const validate = body => {
+const validateCustomer = body => {
   const schema = {
     name: Joi.string()
       .min(3)
@@ -21,4 +21,4 @@ const validate = body => {
 const Customer = mongoose.model('Customer', customerSchema);
 
 exports.Customer = Customer;
-exports.validate = validate;
+exports.validateCustomer = validateCustomer;

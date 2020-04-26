@@ -6,15 +6,16 @@ const mongoose = require('mongoose');
 
 describe('/api/genres', () => {
   
+  beforeEach(() => {
+    server = require('../../app');
+  });
+
+  afterEach(async () => {
+    await server.close();
+    await Genre.deleteMany({});
+  });
+  
   describe('GET /', () => {
-    
-    beforeEach(() => {
-      server = require('../../app');
-    })
-    afterEach(async () => {
-      await Genre.deleteMany({})
-      server.close();
-    })
     
     it('should return all genres', async () => {
       await Genre.collection.insertMany([
@@ -201,8 +202,6 @@ describe('/api/genres', () => {
 
       id = genre._id;
     })
-
-
 
     it('should return 401 if user is not logged in', async () => {
       token = ''

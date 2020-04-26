@@ -7,7 +7,7 @@ const genreSchema = mongoose.Schema({
 
 const Genre = mongoose.model('Genre', genreSchema);
 
-const validate = body => {
+const validateGenre = body => {
   const schema = {
     name: Joi.string()
       .min(5)
@@ -19,5 +19,5 @@ const validate = body => {
 };
 
 exports.Genre = Genre;
-exports.validate = validate;
+exports.validateGenre = validateGenre;
 exports.genreSchema = genreSchema;
