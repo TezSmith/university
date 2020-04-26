@@ -8,6 +8,14 @@ const express = require('express')
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const validateReturn = (req) => {
+  const schema = {
+    customerId: Joi.objectId().required(),
+    movieId: Joi.objectId().required(),
+  };
+
+  return Joi.validate(req, schema);
+};
 
 router.post('/', [auth, validate(validateReturn)], async (req, res) => {
   const rental = await Rental.lookup(req.body.customerId, req.body.movieId)
@@ -25,14 +33,5 @@ router.post('/', [auth, validate(validateReturn)], async (req, res) => {
 
   return res.send(rental)
 })
-
-const validateReturn = (req) => {
-  const schema = {
-    customerId: Joi.objectId().required(),
-    movieId: Joi.objectId().required(),
-  };
-
-  return Joi.validate(req, schema);
-};
 
 module.exports = router;

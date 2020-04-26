@@ -13,6 +13,7 @@ const app = express();
 require('./startup/logging')();
 // Sends app instance to route files.
 require('./startup/routes')(app)
+require('./startup/prod')(app)
 require('./startup/db')();
 require('./startup/config')();
 require('./startup/validation')();
